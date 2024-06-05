@@ -1,9 +1,9 @@
 {
     "manifestVersion": 1,
-    "id": "build-metrics-widget-extension",
-    "version": "1.0.40",
-    "name": "Build Metrics Widget",
-    "description": "A configurable dashboard widget to show build metrics.",
+    "id": "latest-build-links",
+    "version": "0.0.1",
+    "name": "Build Links Widget",
+    "description": "A configurable dashboard widget to show build links.",
     "publisher": "paulabrams1",
     "public": false,
     "targets": [
@@ -15,39 +15,38 @@
         "default": "images/bar-chart-128.png"
     },
     "demands": [
-        "contribution/ms.vss-dashboards-web.widget-sdk-version-2", 
-        "contribution/ms.vss-web.charts-service"
+        "contribution/ms.vss-dashboards-web.widget-sdk-version-2"
     ],
     "contributions": [
         {
-            "id": "widgetChart",
+            "id": "linksWidget",
             "type": "ms.vss-dashboards-web.widget",
             "targets": [
                 "ms.vss-dashboards-web.widget-catalog",
-                ".widgetConfig"
+                ".linksConfig"
             ],
             "properties": {
-                "name": "Build Metrics",
+                "name": "Build Links",
                 "description": "A dashboard widget to show build metrics.",
                 "catalogIconUrl:": "images/bar-chart-128.png",
                 "previewImageUrl": "images/preview.png",
-                "uri": "chart.html",
+                "uri": "links.html",
                 "supportedSizes": [
                     {
                         "rowSpan": 1,
-                        "columnSpan": 1
+                        "columnSpan": 3
                     }
                 ],
                 "supportedScopes": ["project_team"]
             }
         },
         {
-            "id": "widgetConfig",
+            "id": "linksConfig",
             "type": "ms.vss-dashboards-web.widget-configuration",
             "targets": ["ms.vss-dashboards-web.widget-configuration"],
             "properties": {
-                "name": "Build Metrics widget configuration",
-                "description": "Configuration for build metrics widget",
+                "name": "Build Links widget configuration",
+                "description": "Configuration for build links widget",
                 "uri": "config.html"
             }
         }
@@ -60,7 +59,7 @@
             "path": "scripts", "addressable": true
         },
         {
-            "path": "chart.html", "addressable": true
+            "path": "links.html", "addressable": true
         },          
         {
             "path": "config.html", "addressable": true
@@ -76,22 +75,22 @@
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com/pabrams/vsts-build-overview-widget"
+        "uri": "https://github.com/jPaulAbrams/latest-build-links"
     },
     "links": {
         "repository": {
-          "uri": "https://github.com/pabrams/vsts-build-overview-widget"
+          "uri": "https://github.com/jPaulAbrams/latest-build-links"
         },
         "issues": {
-          "uri": "https://github.com/pabrams/vsts-build-overview-widget/issues"
+          "uri": "https://github.com/jPaulAbrams/latest-build-links/issues"
         }
     },
     "tags": [
         "Dashboard",
         "Widget",
         "Build",
-        "Release",
-        "Activity"
+        "Latest",
+        "Links"
     ],
     "scopes": [
         "vso.build"

@@ -9,27 +9,39 @@
             });
     
             VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
-                VSS.register("widgetConfig", function () {
-                    var $buildPathText = $("#build-path-textfield"); 
-    
+                VSS.register("linksConfig", function () {
+                    var setCustomSettings = function() {
+                        var customSettings = {
+                            data: JSON.stringify({
+                                buildTabName: $buildTabNameTextField.val(),
+                                defId1: $defId1TextField.val(),
+                                defId2: $defId2TextField.val(),
+                                defId3: $defId3TextField.val(),
+                            })
+                        };
+                        var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
+                        var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
+                        widgetConfigurationContext.notify(eventName, eventArgs);
+                    }
+                    var $buildTabNameTextField = $("#resultsTabName");
+                    var $defId1TextField = $("#buildDefId1");
+                    var $defId2TextField = $("#buildDefId2");
+                    var $defId3TextField = $("#buildDefId3");
                     return {
                         load: function (widgetSettings, widgetConfigurationContext) {
                             var settings = JSON.parse(widgetSettings.customSettings.data);
-                            if (settings && settings.buildPath) {
-                                console.log("setting buildPath on config load to '" + settings.buildPath + "'");
-                                $buildPathText.val(settings.buildPath);
+                            if (settings && settings.buildDefId1) {
+                                console.log("setting field values");
+                                $buildTabNameTextField.val(settings.buildTabName)
+                                $defId1TextField.val(settings.defId1);
+                                $defId2TextField.val(settings.defId2);
+                                $defId3TextField.val(settings.defId3);
                              }
 
-                            $buildPathText.on("change", function () {
-                                var customSettings = {
-                                    data: JSON.stringify({
-                                        buildPath: $buildPathText.val()
-                                    })
-                                };
-                                var eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
-                                var eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
-                                widgetConfigurationContext.notify(eventName, eventArgs);
-                            });
+                            $buildTabNameTextField.on("change", setCustomSettings);
+                            $defId1TextField.on("change", setCustomSettings);
+                            $defId2TextField.on("change", setCustomSettings);
+                            $defId3TextField.on("change", setCustomSettings);
                             return WidgetHelpers.WidgetStatusHelper.Success();
                         },
                         onSave: function() {
@@ -50,18 +62,29 @@
         <div class="container">
             <fieldset>
                 <table>
+
                     <tr>
                         <td>
-                            <label class="label">Build Path: </label>
-                            <input type="text" id="build-path-textfield" style="margin-top:10px"></input>
+                            <label class="label">Build results tab name: </label>
+                            <input type="text" id="resultsTabName" style="margin-top:10px"></input>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label class="label">Show builds run in the past </label>
-                            <select id="days-dropdown" style="margin-top:10px">
-                                <option value="30" selected>30 days</option>
-                            </select>
+                            <label class="label">Build Definition ID 1: </label>
+                            <input type="text" id="buildDefId1" style="margin-top:10px"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label">Build Definition ID 2: </label>
+                            <input type="text" id="buildDefId2" style="margin-top:10px"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label">Build Definition ID 3: </label>
+                            <input type="text" id="buildDefId3" style="margin-top:10px"></input>
                         </td>
                     </tr>
                 </table>
